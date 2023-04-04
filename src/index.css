@@ -21,3 +21,7 @@ body {
   background: white;
   height: 10%;
 }
+img {
+  width: 900px;
+  border-radius: 20px;
+}
