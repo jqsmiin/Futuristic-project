@@ -10,11 +10,7 @@ export function Cloud({ opacity, ...props }) {
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Node.geometry}>
-        <meshStandardMaterial
-          envMapIntensity={2}
-          transparent
-          opacity={opacity}
-        />
+        <meshStandardMaterial envMapIntensity={2} transparent />
       </mesh>
     </group>
   );

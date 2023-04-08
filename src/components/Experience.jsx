@@ -13,8 +13,12 @@ import { Group } from "three";
 import { Airplane } from "./Airplane";
 import { Background } from "./Background";
 import { Cloud } from "./Cloud";
-import { Sphere } from "./Sphere";
-import { useLoader } from "@react-three/fiber";
+import { Car } from "./Car";
+import { Flower } from "./Flower";
+import { Weapon } from "./Weapon";
+import { Book } from "./Book";
+import { BusStop } from "./BusStop";
+import { Health } from "./Health";
 import img1 from "../photos/slika1.jpg";
 
 const LINE_NB_POINTS = 300;
@@ -117,9 +121,150 @@ export const Experience = () => {
       )
     );
     airplane.current.quaternion.slerp(targetAirplaneQuaternion, delta * 2);
+
+    // Update rotation
+    car.current.rotation.y += 0.03;
+    flower.current.rotation.y += 0.03;
+    weapon.current.rotation.y += 0.03;
+    book.current.rotation.y += 0.03;
+    bus.current.rotation.y += 0.03;
+    health.current.rotation.y += 0.03;
   });
 
   const airplane = useRef();
+  const car = useRef();
+  const flower = useRef();
+  const weapon = useRef();
+  const book = useRef();
+  const bus = useRef();
+  const health = useRef();
+  const clouds = [
+    // {
+    //   id: 1,
+    //   scale: [1, 1, 1.5],
+    //   position: [-3.5, -1.2, -7],
+    // },
+    // {
+    //   id: 2,
+    //   scale: [1, 1, 2],
+    //   position: [3.5, -1, -10],
+    // },
+    // {
+    //   id: 3,
+    //   scale: [1, 1, 1],
+    //   position: [3.5, 0.2, -12],
+    // },
+    // {
+    //   id: 4,
+    //   scale: [0.4, 0.4, 0.4],
+    //   position: [1, -0.2, -12],
+    // },
+    // {
+    //   id: 5,
+    //   scale: [0.3, 0.5, 2],
+    //   position: [-4, -0.5, -53],
+    // },
+    {
+      id: 6,
+      scale: [0.8, 0.8, 0.8],
+      position: [-1, -1.5, -100],
+    },
+    {
+      id: 7,
+      scale: [0.8, 0.8, 0.8],
+      position: [-1, -1.5, -200],
+    },
+    {
+      id: 8,
+      scale: [0.8, 0.8, 0.8],
+      position: [-16, -3, -200],
+    },
+    {
+      id: 9,
+      scale: [1, 1, 2],
+      position: [-16, -3, -200],
+    },
+    {
+      id: 10,
+      scale: [1, 1, 2],
+      position: [-2, -3, -300],
+    },
+    // {
+    //   id: 10,
+    //   scale: [1, 1, 2],
+    //   position: [70, -2, -400],
+    // },
+    {
+      id: 11,
+      scale: [1, 1, 2],
+      position: [90, -2, -500],
+    },
+    {
+      id: 12,
+      scale: [1, 1, 2],
+      position: [10, -3, -600],
+    },
+    {
+      id: 13,
+      scale: [1, 1, 2],
+      position: [-75, -3, -680],
+    },
+    {
+      id: 14,
+      scale: [1, 1, 2],
+      position: [-90, -3, -750],
+    },
+    {
+      id: 15,
+      scale: [1, 1, 2],
+      position: [-75, -3, -800],
+    },
+    {
+      id: 16,
+      scale: [1, 1, 2],
+      position: [3, -3, -900],
+    },
+    {
+      id: 17,
+      scale: [1, 1, 2],
+      position: [90, -1, -1000],
+    },
+    {
+      id: 18,
+      scale: [1, 1, 2],
+      position: [70, -1, -1100],
+    },
+    {
+      id: 19,
+      scale: [1, 1, 2],
+      position: [10, -1, -1250],
+    },
+    {
+      id: 20,
+      scale: [1, 1, 2],
+      position: [3, -3, -1400],
+    },
+    {
+      id: 21,
+      scale: [1, 1, 2],
+      position: [6, -2, -1500],
+    },
+    {
+      id: 22,
+      scale: [1, 1, 2],
+      position: [-6, -2, -1500],
+    },
+    {
+      id: 23,
+      scale: [1, 1, 2],
+      position: [-6, -2, -1600],
+    },
+    {
+      id: 24,
+      scale: [1, 1, 2],
+      position: [-6, -2, -1650],
+    },
+  ];
 
   return (
     <>
@@ -138,6 +283,36 @@ export const Experience = () => {
           </Float>
         </group>
       </group>
+      <group ref={car} position={[5, -3.5, -255]} scale={[0.1, 0.1, 0.1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Car rotation-y={Math.PI / 1.3} scale={[0.1, 0.1, 0.1]} />
+        </Float>
+      </group>
+      <group ref={flower} position={[70, -4, -400]} scale={[1, 1, 1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Flower rotation-y={Math.PI / 1.3} scale={[0.4, 0.4, 0.4]} />
+        </Float>
+      </group>
+      <group ref={weapon} position={[26, -4.3, -600]} scale={[1, 1, 1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Weapon rotation-y={Math.PI / 2} scale={[1, 1, 1]} />
+        </Float>
+      </group>
+      <group ref={book} position={[15, -3, -900]} scale={[3, 3, 3]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Book rotation-y={Math.PI / 1.3} scale={[5, 5, 5]} />
+        </Float>
+      </group>
+      <group ref={bus} position={[81, -3.5, -1100]} scale={[0.1, 0.1, 0.1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <BusStop rotation-y={Math.PI / 1.3} scale={[5, 5, 5]} />
+        </Float>
+      </group>
+      <group ref={health} position={[-3.7, -5, -1400]} scale={[0.1, 0.1, 0.1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Health rotation-y={Math.PI / 1.3} scale={[2, 2, 2]} />
+        </Float>
+      </group>
       {/* TEXT */}
       <group position={[-3, 0, -100]}>
         <Image
@@ -149,7 +324,7 @@ export const Experience = () => {
           position={[-4, 0, 0]}
         />
         <Text
-          color="white"
+          color="#000"
           anchorX={"left"}
           anchorY="middle"
           fontSize={0.22}
@@ -159,12 +334,11 @@ export const Experience = () => {
           Welcome to the Travnik 2035!{"\n"}
           Have a seat and enjoy the ride!
         </Text>
-        <Sphere />
       </group>
 
       <group position={[4, 1, -260]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"left"}
           anchorY="center"
           fontSize={0.52}
@@ -174,7 +348,7 @@ export const Experience = () => {
           Innovation
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"left"}
           anchorY="top"
           position-y={-0.8}
@@ -193,7 +367,7 @@ export const Experience = () => {
 
       <group position={[75, 1, -400]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -205,7 +379,7 @@ export const Experience = () => {
           Sustainability
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           fontSize={0.22}
@@ -222,7 +396,7 @@ export const Experience = () => {
 
       <group position={[30, 1, -600]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -233,7 +407,7 @@ export const Experience = () => {
           Culture
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           position-y={-0.8}
@@ -252,7 +426,7 @@ export const Experience = () => {
 
       <group position={[19, 1, -900]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -263,7 +437,7 @@ export const Experience = () => {
           Education
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           position-y={-0.8}
@@ -282,7 +456,7 @@ export const Experience = () => {
 
       <group position={[85, 1, -1100]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -293,7 +467,7 @@ export const Experience = () => {
           Mobility
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           position-y={-0.8}
@@ -312,7 +486,7 @@ export const Experience = () => {
 
       <group position={[3, 1, -1400]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -323,7 +497,7 @@ export const Experience = () => {
           Health and Wellness
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           position-y={-0.8}
@@ -341,7 +515,7 @@ export const Experience = () => {
       </group>
       <group position={[7.5, 1, -1600]}>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="center"
           fontSize={0.52}
@@ -352,7 +526,7 @@ export const Experience = () => {
           Thank you
         </Text>
         <Text
-          color="white"
+          color="#000"
           anchorX={"right"}
           anchorY="top"
           position-y={-0.8}
@@ -390,26 +564,18 @@ export const Experience = () => {
       </group>
 
       {/* CLOUDS */}
-      <Cloud scale={[1, 1, 1.5]} position={[-3.5, -1.2, -7]} />
-      <Cloud scale={[1, 1, 2]} position={[3.5, -1, -10]} rotation-y={Math.PI} />
-      <Cloud
-        scale={[1, 1, 1]}
-        position={[-3.5, 0.2, -12]}
-        rotation-y={Math.PI / 3}
-      />
-      <Cloud scale={[1, 1, 1]} position={[3.5, 0.2, -12]} />
-
-      <Cloud
-        scale={[0.4, 0.4, 0.4]}
-        rotation-y={Math.PI / 9}
-        position={[1, -0.2, -12]}
-      />
-      <Cloud scale={[0.3, 0.5, 2]} position={[-4, -0.5, -53]} />
-      <Cloud scale={[0.8, 0.8, 0.8]} position={[-1, -1.5, -100]} />
-      <Cloud scale={[0.8, 0.8, 0.8]} position={[-1, -1.5, -200]} />
-      <Cloud scale={[0.8, 0.8, 0.8]} position={[-16, -3, -200]} />
-      <Cloud scale={[1, 1, 2]} position={[-2, -3, -300]} />
-      <Cloud scale={[1, 1, 2]} position={[70, -2, -400]} />
+      {clouds.map((cloud) => {
+        return (
+          <>
+            {" "}
+            <Cloud
+              key={cloud.id}
+              scale={cloud.scale}
+              position={cloud.position}
+            />{" "}
+          </>
+        );
+      })}
     </>
   );
 };
