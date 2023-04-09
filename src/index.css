@@ -25,3 +25,10 @@ img {
   width: 900px;
   border-radius: 20px;
 }
+canvas {
+  cursor: default;
+}
+
+canvas:hover {
+  cursor: pointer;
+}

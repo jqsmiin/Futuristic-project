@@ -4,10 +4,11 @@ import {
   Text,
   useScroll,
   Image,
-  useTexture,
+  Html,
 } from "@react-three/drei";
+import { gsap } from "gsap";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Group } from "three";
 import { Airplane } from "./Airplane";
@@ -19,7 +20,9 @@ import { Weapon } from "./Weapon";
 import { Book } from "./Book";
 import { BusStop } from "./BusStop";
 import { Health } from "./Health";
-import img1 from "../photos/slika1.jpg";
+import { Birds } from "./Birds";
+import { PaperBird } from "./PaperBird";
+import data from "./utils/Data";
 
 const LINE_NB_POINTS = 300;
 const CURVE_DISTANCE = 250;
@@ -121,6 +124,7 @@ export const Experience = () => {
       )
     );
     airplane.current.quaternion.slerp(targetAirplaneQuaternion, delta * 2);
+    airplane.current.transition += 0.03;
 
     // Update rotation
     car.current.rotation.y += 0.03;
@@ -129,6 +133,15 @@ export const Experience = () => {
     book.current.rotation.y += 0.03;
     bus.current.rotation.y += 0.03;
     health.current.rotation.y += 0.03;
+
+    // gsap.to(paperBird.current.position, {
+    //   x: paperBird.current.position.x - 0.8,
+    //   y: paperBird.current.position.y - 0.4,
+    //   duration: 1,
+    //   repeat: 2,
+    //   repeatDelay: 0.5,
+    //   yoyo: true,
+    // });
   });
 
   const airplane = useRef();
@@ -138,6 +151,7 @@ export const Experience = () => {
   const book = useRef();
   const bus = useRef();
   const health = useRef();
+  const paperBird = useRef();
   const clouds = [
     // {
     //   id: 1,
@@ -242,7 +256,7 @@ export const Experience = () => {
     {
       id: 20,
       scale: [1, 1, 2],
-      position: [3, -3, -1400],
+      position: [-15, -3, -1400],
     },
     {
       id: 21,
@@ -266,6 +280,122 @@ export const Experience = () => {
     },
   ];
 
+  const birds = [
+    {
+      id: 1,
+      scale: [1.5, 1.5, 1.5],
+      position: [90, 5, -400],
+    },
+    {
+      id: 9,
+      scale: [1.5, 1.5, 1.5],
+      position: [90, 5, -400],
+    },
+    {
+      id: 2,
+      scale: [1.5, 1.5, 1.5],
+      position: [5, 1, -600],
+    },
+    {
+      id: 3,
+      scale: [1.5, 1.5, 1.5],
+      position: [15, 5, -800],
+    },
+    {
+      id: 4,
+      scale: [1.5, 1.5, 1.5],
+      position: [80, 5, -1300],
+    },
+    {
+      id: 5,
+      scale: [1.5, 1.5, 1.5],
+      position: [2, 5, -1600],
+    },
+    {
+      id: 6,
+      scale: [1.5, 1.5, 1.5],
+      position: [5, 10, -1700],
+    },
+    {
+      id: 7,
+      scale: [5, 5, 5],
+      position: [15, 10, -1800],
+    },
+    {
+      id: 8,
+      scale: [5, 5, 5],
+      position: [15, 10, -1800],
+    },
+    {
+      id: 9,
+      scale: [5, 5, 5],
+      position: [1, 1, -2100],
+    },
+    {
+      id: 10,
+      scale: [5, 5, 5],
+      position: [1, 1, -1900],
+    },
+  ];
+
+  const birdPair = [
+    {
+      id: 1,
+      scale: [5, 5, 5],
+      position: [90, -7, -500],
+    },
+    {
+      id: 2,
+      scale: [5, 5, 5],
+      position: [90, -7, -700],
+    },
+    {
+      id: 3,
+      scale: [5, 5, 5],
+      position: [-20, 5, -700],
+    },
+    {
+      id: 4,
+      scale: [5, 5, 5],
+      position: [-20, 5, -800],
+    },
+    {
+      id: 5,
+      scale: [5, 5, 5],
+      position: [-20, 5, -900],
+    },
+    {
+      id: 6,
+      scale: [5, 5, 5],
+      position: [-100, 5, -800],
+    },
+    {
+      id: 7,
+      scale: [5, 5, 5],
+      position: [-100, 5, -900],
+    },
+    {
+      id: 8,
+      scale: [5, 5, 5],
+      position: [80, 5, -1000],
+    },
+    {
+      id: 9,
+      scale: [5, 5, 5],
+      position: [80, 2, -1100],
+    },
+    {
+      id: 9,
+      scale: [5, 5, 5],
+      position: [80, 5, -1200],
+    },
+  ];
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <directionalLight position={[0, 3, 1]} intensity={0.1} />
@@ -278,12 +408,12 @@ export const Experience = () => {
             <Airplane
               rotation-y={Math.PI / 2}
               scale={[0.2, 0.2, 0.2]}
-              position-y={0.1}
+              position-y={!open ? 0.1 : -0.6}
             />
           </Float>
         </group>
       </group>
-      <group ref={car} position={[5, -3.5, -255]} scale={[0.1, 0.1, 0.1]}>
+      <group ref={car} position={[5, -4, -255]} scale={[0.1, 0.1, 0.1]}>
         <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
           <Car rotation-y={Math.PI / 1.3} scale={[0.1, 0.1, 0.1]} />
         </Float>
@@ -293,7 +423,7 @@ export const Experience = () => {
           <Flower rotation-y={Math.PI / 1.3} scale={[0.4, 0.4, 0.4]} />
         </Float>
       </group>
-      <group ref={weapon} position={[26, -4.3, -600]} scale={[1, 1, 1]}>
+      <group ref={weapon} position={[80, -4.3, -550]} scale={[1, 1, 1]}>
         <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
           <Weapon rotation-y={Math.PI / 2} scale={[1, 1, 1]} />
         </Float>
@@ -308,241 +438,215 @@ export const Experience = () => {
           <BusStop rotation-y={Math.PI / 1.3} scale={[5, 5, 5]} />
         </Float>
       </group>
-      <group ref={health} position={[-3.7, -5, -1400]} scale={[0.1, 0.1, 0.1]}>
+      <group ref={health} position={[1, -7, -1400]} scale={[0.1, 0.1, 0.1]}>
         <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
           <Health rotation-y={Math.PI / 1.3} scale={[2, 2, 2]} />
         </Float>
       </group>
+      <group position={[1, -7, -1800]} scale={[0.1, 0.1, 0.1]}>
+        <Birds rotation-y={Math.PI / 1.3} scale={[2, 2, 2]} />
+      </group>
+      <group position={[1, -7, -2000]} scale={[0.1, 0.1, 0.1]}>
+        <Float floatIntensity={2} speed={1.5} rotationIntensity={0.5}>
+          <Birds rotation-y={Math.PI / 1.3} scale={[2, 2, 2]} />
+        </Float>
+      </group>
       {/* TEXT */}
       <group position={[-3, 0, -100]}>
-        <Image
-          url={`${img1}`}
-          width={2}
-          height={2}
-          anchorX={"left"}
-          anchorY="left"
-          position={[-4, 0, 0]}
-        />
         <Text
           color="#000"
           anchorX={"left"}
           anchorY="middle"
           fontSize={0.22}
           maxWidth={2.5}
-          font={"./fonts/Inter-Regular.ttf"}
+          font={"sans-serif"}
         >
           Welcome to the Travnik 2035!{"\n"}
           Have a seat and enjoy the ride!
         </Text>
       </group>
 
-      <group position={[4, 1, -260]}>
+      {data.map((item) => {
+        return (
+          <group position={item.position} key={item.id}>
+            {!open && (
+              <>
+                <Text
+                  color="#000"
+                  anchorX={"left"}
+                  anchorY="center"
+                  fontSize={0.52}
+                  maxWidth={6}
+                  font="sans-serif"
+                >
+                  {item.title}
+                </Text>
+                <mesh position={item.btnPosition}>
+                  <group>
+                    <Text
+                      onClick={handleOpen}
+                      color="#fff"
+                      anchorX={"center"}
+                      anchorY="middle"
+                      fontSize={0.22}
+                      maxWidth={1.4}
+                      position={[0, 0, 0.05]}
+                      font="sans-serif"
+                    >
+                      See More
+                    </Text>
+                    <mesh
+                      position={[0, 0, 0.045]}
+                      onPointerOver={(e) => e.stopPropagation()}
+                    >
+                      <planeBufferGeometry args={[1.5, 0.5]} />
+                      <meshStandardMaterial color="#000" />
+                    </mesh>
+                  </group>
+                </mesh>
+
+                <Text
+                  color="#000"
+                  anchorX={"left"}
+                  anchorY="top"
+                  position-y={-0.8}
+                  fontSize={0.22}
+                  maxWidth={6}
+                  letterSpacing={0.05}
+                  font="sans-serif"
+                >
+                  {item.paragraph1}
+                </Text>
+              </>
+            )}
+            {open && (
+              <group>
+                <mesh position={item.position2}>
+                  <planeBufferGeometry args={[15, 9]} />
+                  <meshBasicMaterial color="#000" transparent opacity={0.9} />
+                </mesh>
+                <group position={item.textPosition}>
+                  <Text
+                    color="#fff"
+                    anchorX={"left"}
+                    anchorY="left"
+                    fontSize={0.5}
+                    maxWidth={6}
+                    position={item.closePosition}
+                    onClick={handleClose}
+                    font="sans-serif"
+                  >
+                    X
+                  </Text>
+                  <Image
+                    url={`${item.photo1}`}
+                    width={5}
+                    height={5}
+                    scale={2}
+                    anchorX={"left"}
+                    anchorY="left"
+                    position={[4.3, 1.5, 0.5]}
+                    color={"#fff"}
+                    font="sans-serif"
+                  />
+                  <Text
+                    color="#fff"
+                    anchorX={"center"}
+                    anchorY="middle"
+                    fontSize={0.5}
+                    maxWidth={6}
+                    position={[-6, 2.2, 0.1]}
+                    font="sans-serif"
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    color="#fff"
+                    anchorX={"center"}
+                    anchorY="middle"
+                    fontSize={0.23}
+                    maxWidth={10}
+                    font="sans-serif"
+                    position={[-2, 1, 0.1]}
+                  >
+                    {item.paragraph1}
+                  </Text>
+                  <Text
+                    color="#fff"
+                    anchorX={"center"}
+                    anchorY="middle"
+                    fontSize={0.23}
+                    maxWidth={10}
+                    position={[1, -1.5, 1]}
+                    font="sans-serif"
+                  >
+                    {item.paragraph2}
+                  </Text>
+                  <Image
+                    url={`${item.photo2}`}
+                    width={5}
+                    height={5}
+                    scale={2}
+                    anchorX={"left"}
+                    anchorY="left"
+                    position={[-5.5, -1.5, 0.5]}
+                    color={"#fff"}
+                  />
+                  <group position={item.imagePosition}>
+                    <Image
+                      url={`${item.photo3}`}
+                      width={5}
+                      height={5}
+                      scale={2}
+                      anchorX={"left"}
+                      anchorY="left"
+                      position={[-5, -1.5, 0.5]}
+                      color={"#fff"}
+                    />
+                    <Image
+                      url={`${item.photo4}`}
+                      width={5}
+                      height={5}
+                      scale={2}
+                      anchorX={"left"}
+                      anchorY="left"
+                      position={[-1, -1.5, 0.5]}
+                      color={"#fff"}
+                    />
+                    <Image
+                      url={`${item.photo5}`}
+                      width={5}
+                      height={5}
+                      scale={2}
+                      anchorX={"left"}
+                      anchorY="left"
+                      position={[3, -1.5, 0.5]}
+                      color={"#fff"}
+                    />
+                  </group>
+                </group>
+              </group>
+            )}
+          </group>
+        );
+      })}
+
+      <group position={[1, 0, -1750]}>
         <Text
           color="#000"
           anchorX={"left"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Innovation
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"left"}
-          anchorY="top"
-          position-y={-0.8}
+          anchorY="middle"
           fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Travnik is set to become a hub for technological innovation and
-          entrepreneurship, with a thriving startup scene and cutting-edge
-          research facilities. New technologies like blockchain, artificial
-          intelligence, and 3D printing will be at the forefront of this
-          innovation, driving economic growth and creating new opportunities for
-          businesses and individuals alike.
-        </Text>
-      </group>
-
-      <group position={[75, 1, -400]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={6}
-          position-y={1}
-          position-x={-2.8}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Sustainability
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Travnik will have transformed into a sustainable, green city with a
-          strong focus on environmental conservation and renewable energy. With
-          a variety of green initiatives and policies in place, the city will be
-          a leader in the fight against climate change, and a model for other
-          cities around the world.
-        </Text>
-      </group>
-
-      <group position={[30, 1, -600]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
           maxWidth={2.5}
-          position-x={-4.2}
-          font={"./fonts/Inter-Regular.ttf"}
+          font={"sans-serif"}
         >
-          Culture
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          position-y={-0.8}
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Travnik's cultural scene is more vibrant than ever, with a diverse
-          range of festivals, events, and artistic endeavors taking place
-          throughout the city. The city's rich history and cultural heritage
-          will continue to inspire new forms of artistic expression, and draw
-          visitors from around the world to experience the unique and vibrant
-          culture of Travnik.
-        </Text>
-      </group>
-
-      <group position={[19, 1, -900]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={2.5}
-          position-x={-3.7}
-          font={"./fonts/DMSerifDisplay-Regular.ttf"}
-        >
-          Education
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          position-y={-0.8}
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          As a center for education and innovation, Travnik have a highly
-          skilled and educated workforce, with a strong emphasis on lifelong
-          learning and professional development. The city is home to a variety
-          of world-class educational institutions, from primary schools to
-          universities, and offers a wealth of opportunities for students and
-          professionals to grow and succeed in their chosen fields.
-        </Text>
-      </group>
-
-      <group position={[85, 1, -1100]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={2.5}
-          position-x={-4.1}
-          font={"./fonts/DMSerifDisplay-Regular.ttf"}
-        >
-          Mobility
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          position-y={-0.8}
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          With a focus on connectivity and mobility, Travnik have a highly
-          efficient and integrated transportation network that makes it easy for
-          residents and visitors to get around the city. This includes a variety
-          of transportation options, from electric vehicles and public transit
-          to bike-sharing and pedestrian-friendly infrastructure, making it easy
-          for people to travel safely and sustainably throughout the city.
-        </Text>
-      </group>
-
-      <group position={[3, 1, -1400]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
-          position-x={-1.4}
-          maxWidth={5}
-          font={"./fonts/DMSerifDisplay-Regular.ttf"}
-        >
-          Health and Wellness
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          position-y={-0.8}
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Travnik is a leader in promoting health and wellness for its
-          residents. The city is home to a variety of world-class healthcare
-          facilities, including hospitals, clinics, and research centers, as
-          well as a wide range of fitness and wellness centers. With a strong
-          focus on preventative care and healthy living, residents of Travnik
-          enjoy longer, healthier lives and a higher quality of life.
-        </Text>
-      </group>
-      <group position={[7.5, 1, -1600]}>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={2.5}
-          position-x={-3.6}
-          font={"./fonts/DMSerifDisplay-Regular.ttf"}
-        >
-          Thank you
-        </Text>
-        <Text
-          color="#000"
-          anchorX={"right"}
-          anchorY="top"
-          position-y={-0.8}
-          fontSize={0.22}
-          maxWidth={6}
-          font={"./fonts/Inter-Regular.ttf"}
-        >
-          Thank you for joining us on this journey through Travnik in 2035. We
-          hope you enjoyed experiencing the innovative technology, sustainable
-          practices, rich culture, top-tier education, efficient mobility, and
-          focus on wellness and tourism that this futuristic city has to offer.
+          Thank you for being a part of this journey. This was our vision of the
+          future for Travnik in 2035.
         </Text>
       </group>
 
       {/* LINE */}
-      <group position-y={-2}>
+      <group position-y={-3}>
         <mesh>
           <extrudeGeometry
             args={[
@@ -576,6 +680,24 @@ export const Experience = () => {
           </>
         );
       })}
+
+      {birds.map((bird) => (
+        <Float rotationIntensity={0.5}>
+          <Birds key={bird.id} scale={bird.scale} position={bird.position} />
+        </Float>
+      ))}
+
+      {birdPair.map((bird) => (
+        <Float rotationIntensity={0.5}>
+          <PaperBird
+            key={bird.id}
+            scale={bird.scale}
+            position={bird.position}
+            rotation-y={Math.PI / 1.3}
+            rotation-x={Math.PI / 0.5}
+          />
+        </Float>
+      ))}
     </>
   );
 };

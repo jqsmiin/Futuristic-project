@@ -5,13 +5,13 @@ import * as THREE from "three";
 
 export const Background = () => {
   const colorA = "#eeb9a0";
-  const colorB = "#fff";
+  const colorB = "#333";
   const start = 0.2;
   const end = -0.5;
   return (
     <>
       <Sphere scale={[500, 500, 500]} rotation-y={Math.PI / 2}>
-        <LayerMaterial color={"#ffffff"} side={THREE.BackSide}>
+        <LayerMaterial color={"#000"} side={THREE.BackSide}>
           <Gradient
             colorA={colorA}
             colorB={colorB}
